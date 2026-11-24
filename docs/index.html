@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123e3c">
+  <title>Yalova Land Observatory · Parcel valuation</title>
+  <link rel="stylesheet" href="assets/leaflet/leaflet.css"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap nav"><a class="brand" href="#map-section"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span> Yalova Land Observatory</a>
+    <nav aria-label="Page sections"><a href="#map-section">Map</a><a href="#evidence">Model evidence</a><a href="#data">Downloads</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <section class="intro"><div><p class="kicker">MARMARA REGION &nbsp;/&nbsp; TÜRKİYE</p>
+    <h1>Yalova land values</h1><p class="dek">Explore parcel asking prices and a 500-metre valuation grid across Yalova Province.</p></div>
+    <div class="dateline"><span class="dot"></span><span>Fieldwork<br><strong>23–24 November 2026</strong></span></div>
+  </section>
+  <section id="map-section" class="atlas" aria-label="Interactive land valuation map">
+    <div class="atlas-main">
+      <div class="bar"><h2>Province map</h2>
+        <div class="layer-tabs" aria-label="Map layer" role="group">
+          <button type="button" data-mode="index" aria-pressed="true">Price index</button><button type="button" data-mode="satellite" aria-pressed="false">Satellite</button><button type="button" data-mode="lisa" aria-pressed="false">LISA clusters</button>
+        </div>
+      </div>
+      <div class="map-shell"><div id="map" aria-label="Map of Yalova. Use the offers list for keyboard access to parcel details."></div><button type="button" id="extent" aria-label="Fit entire province" title="Fit entire province">Fit province</button></div>
+      <div class="legend"><div class="legend-head"><span id="legend-title">Land price index</span><span id="legend-unit">Grid median = 100</span></div><div id="legend-swatches"></div>
+        <p id="caption" aria-live="polite">Loading local map layers…</p></div>
+    </div>
+    <aside class="sidebar">
+      <section class="inspect" id="inspector" aria-label="Selected map location" aria-live="polite">
+        <p class="kicker">REFERENCE PARCEL</p><h2>Province benchmark</h2><p class="price">5,279 <small>TL/m²</small></p>
+        <p class="explain">Median grid estimate for a 2,340 m² field with an individual title, a floor-area ratio of 0.60 and a permitted height of 10.5 m.</p><p class="hint">Select a grid cell or an offer to inspect its estimate.</p>
+      </section>
+      <section class="filters" aria-labelledby="offer-title"><div class="line-title"><h2 id="offer-title">Verified offers</h2><span class="num" id="offer-count">13</span></div>
+        <div class="pair"><label>Max. budget (TL)<input id="budget" type="number" min="0" step="any" inputmode="numeric" placeholder="Any budget"></label>
+          <label>Min. area (m²)<input id="area" type="number" min="0" step="any" inputmode="numeric" placeholder="Any area"></label></div>
+        <label>Zoning<select id="zone"><option value="">All zoning types</option></select></label>
+        <div class="listhead"><span>Asking price</span><button type="button" id="reset">Reset filters</button></div><div id="offer-list" aria-label="Filtered parcel offers"></div>
+      </section>
+    </aside>
+  </section>
+  <section class="stats" aria-label="Study sample counts">
+    <div><b>113</b><span>Direct listing pages</span></div><div><b>28</b><span>Recent posting dates</span></div><div><b>44</b><span>Matched cadastral parcels</span></div><div><b>13</b><span>Dated, verified model records</span></div>
+  </section>
+  <div id="evidence" class="evidence"><section>
+    <p class="kicker">SPATIAL VALIDATION</p><h2>How well does the map predict?</h2><p>Thirteen dated parcels in Armutlu, Altınova and Merkez cover six spatial blocks. Five-fold testing held out whole blocks. All three models scored below zero on R², so estimates for individual purchases carry substantial uncertainty.</p>
+    <table><thead><tr><th>Model</th><th>RMSE (TL/m²)</th><th>R²</th></tr></thead><tbody><tr><td>Random Forest</td><td>6,964</td><td>−0.521</td></tr><tr><td>LightGBM</td><td>7,622</td><td>−0.822</td></tr><tr><td>XGBoost</td><td>8,832</td><td>−1.447</td></tr></tbody></table>
+  </section><section id="data"><p class="kicker">METHODS &amp; DATA</p><h2>Download the map data</h2><p>The model combines parcel attributes, seven accessibility distances and three Sentinel-2 spectral indices. The grid fixes the parcel attributes and varies the location. Index 100 equals the province-wide median prediction.</p>
+    <div class="download"><a href="assets/verified_pilot.geojson" download="Yalova_verified_grid.geojson">Valuation grid <span>GeoJSON · 3,401 cells</span></a><button type="button" id="csv">Verified offers <span>CSV · 13 anonymised records</span></button></div>
+    <p class="source">Contains modified Copernicus Sentinel data (2026), acquired 9 November. Accessibility and study geometry from <a href="https://www.openstreetmap.org/copyright" rel="noreferrer">OpenStreetMap contributors</a>, 22 November 2026. Cadastral geometry checked through <a href="https://parselsorgu.tkgm.gov.tr/" rel="noreferrer">TKGM Parcel Sorgu</a>.</p>
+  </section></div>
+  <p class="guidance">Research estimates are guidance only. A licensed valuation expert must perform an official appraisal.</p>
+</main>
+<footer><div class="wrap foot"><section><p class="kicker">CME434 GEOGRAPHIC INFORMATION SYSTEMS · KARABÜK UNIVERSITY</p>
+  <h2>A GIS and ML-Based Land Parcel Valuation System for Decision Support</h2></section>
+  <div class="team"><p>SUBHI YASER SUBHI DDA <span>2310213583</span></p><p>Magd Shalaby <span>2210213583</span></p><p class="supervisor">Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab</p></div></div></footer>
+<script src="assets/leaflet/leaflet.js"></script><script src="map.js"></script>
+</body></html>
