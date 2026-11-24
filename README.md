@@ -14,7 +14,7 @@ Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab
 
 The private ledger contains 113 land offers with asking prices and areas verified through direct listing pages in Brave on 23–24 November 2026. It includes 28 original publication dates in the review window, 10 dated source updates and 75 undated offers. The 106 in-boundary advertising pins are provisional parcel locations. The full study still needs a cohort of 300 verified parcels and the six-band provincial Earth Engine raster.
 
-[Interactive Yalova atlas](https://subhidada009.github.io/yalova-parcel-valuation-cme434/) · [Source repository](https://github.com/subhidada009/yalova-parcel-valuation-cme434) · [Tagged release](https://github.com/subhidada009/yalova-parcel-valuation-cme434/releases/tag/v1.0.0)
+[Live Python valuation application](https://yalova-parcel-valuation-cme434.onrender.com) · [Interactive Yalova atlas](https://subhidada009.github.io/yalova-parcel-valuation-cme434/) · [Source repository](https://github.com/subhidada009/yalova-parcel-valuation-cme434) · [Tagged research release](https://github.com/subhidada009/yalova-parcel-valuation-cme434/releases/tag/v1.0.0)
 
 [![DOI](https://zenodo.org/badge/1469693624.svg)](https://zenodo.org/badge/latestdoi/1469693624)
 
@@ -43,7 +43,7 @@ Default local address: http://127.0.0.1:8434 . Leaflet, all display layers and a
 
 ## Geographic inputs
 
-The Earth Engine NDVI export for Armutlu covers six dated cadastral centres. The Sentinel-2 SR window was 25 October to 24 November 2026 with a 20% scene cloud setting. Means over 100 m buffers ranged from 0.583 to 0.804. The downloaded GeoTIFF and its metadata are in the layers directory. The province-wide pilot predictors use the separately documented Copernicus source. [Earth Engine spectral calculator](https://defaniarman.users.earthengine.app/view/s2-spectral-calc)
+The Earth Engine NDVI export for Armutlu covers six dated cadastral centres. The Sentinel-2 SR window was 25 October to 24 November 2026 with a 20% scene cloud setting. Means over 100 m buffers ranged from 0.583 to 0.804. The downloaded GeoTIFF and its metadata are in the layers directory. Run `python preparation/sample_gee_ndvi.py verified/value_points.gpkg layers/gee_armutlu_ndvi.tif ndvi_means.csv` with the verified points from the private analysis archive to reproduce the six results. The province-wide pilot predictors use the separately documented Copernicus source. [Earth Engine spectral calculator](https://defaniarman.users.earthengine.app/view/s2-spectral-calc)
 
 - Eight WGS84 GeoJSON layers and their licence, snapshot time and extraction rules are in `layers/`. Shipped OSM snapshot: 22 November 2026 at 21:20:48 UTC. The seven accessibility layers cover the terrestrial region and an 18 km margin. To rebuild them, download the pinned national PBF in `layers/vector_sources.json`, install `osmium` and run `python preparation/extract_vectors.py path/to/turkey-261122.osm.pbf layers`. [Geofabrik](https://download.geofabrik.de/europe/turkey.html)
 - The Sentinel-2C RGB mosaic and independent 60 m three-band reference come from 9 November 2026. Their STAC product identifiers are in `layers/rgb_bounds.json`. The reference preview can be rebuilt with `python preparation/copernicus_reference.py`. The Earth Engine and Copernicus outputs have different provenance.
