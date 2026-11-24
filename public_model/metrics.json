@@ -1,0 +1,303 @@
+{
+  "models": [
+    {
+      "model": "Random Forest",
+      "rmse": 6963.925667768452,
+      "r2": -0.5211032520949497
+    },
+    {
+      "model": "LightGBM",
+      "rmse": 7621.790306943554,
+      "r2": -0.8220673813475818
+    },
+    {
+      "model": "XGBoost",
+      "rmse": 8831.934734007731,
+      "r2": -1.446595334680071
+    }
+  ],
+  "folds": [
+    {
+      "model": "Random Forest",
+      "fold": 1,
+      "n_test": 4,
+      "blocks": 1,
+      "rmse": 7245.23462767249,
+      "r2": -4.145306444476943,
+      "parameters": {
+        "model__max_features": 0.7,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "model": "Random Forest",
+      "fold": 2,
+      "n_test": 3,
+      "blocks": 1,
+      "rmse": 6619.76311545479,
+      "r2": -31.149685237952653,
+      "parameters": {
+        "model__max_features": 1.0,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "model": "Random Forest",
+      "fold": 3,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 9795.537700596744,
+      "r2": -23485.088999491676,
+      "parameters": {
+        "model__max_features": 1.0,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "model": "Random Forest",
+      "fold": 4,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 3525.2578231173193,
+      "r2": -56.234710387443464,
+      "parameters": {
+        "model__max_features": 0.7,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "model": "Random Forest",
+      "fold": 5,
+      "n_test": 2,
+      "blocks": 2,
+      "rmse": 6010.569677652293,
+      "r2": -5466.665408676928,
+      "parameters": {
+        "model__max_features": 1.0,
+        "model__min_samples_leaf": 2
+      }
+    },
+    {
+      "model": "XGBoost",
+      "fold": 1,
+      "n_test": 4,
+      "blocks": 1,
+      "rmse": 6838.144107517471,
+      "r2": -3.583348021343256,
+      "parameters": {
+        "model__max_depth": 2,
+        "model__subsample": 1.0
+      }
+    },
+    {
+      "model": "XGBoost",
+      "fold": 2,
+      "n_test": 3,
+      "blocks": 1,
+      "rmse": 9548.332686703741,
+      "r2": -65.88780014018977,
+      "parameters": {
+        "model__max_depth": 2,
+        "model__subsample": 1.0
+      }
+    },
+    {
+      "model": "XGBoost",
+      "fold": 3,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 12972.354472289557,
+      "r2": -41188.99659771986,
+      "parameters": {
+        "model__max_depth": 2,
+        "model__subsample": 1.0
+      }
+    },
+    {
+      "model": "XGBoost",
+      "fold": 4,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 5017.528231029786,
+      "r2": -114.94642672746942,
+      "parameters": {
+        "model__max_depth": 2,
+        "model__subsample": 0.8
+      }
+    },
+    {
+      "model": "XGBoost",
+      "fold": 5,
+      "n_test": 2,
+      "blocks": 2,
+      "rmse": 9126.115111551744,
+      "r2": -12603.991086508886,
+      "parameters": {
+        "model__max_depth": 2,
+        "model__subsample": 0.8
+      }
+    },
+    {
+      "model": "LightGBM",
+      "fold": 1,
+      "n_test": 4,
+      "blocks": 1,
+      "rmse": 8448.200068263106,
+      "r2": -5.9957570326977025,
+      "parameters": {
+        "model__min_child_samples": 2,
+        "model__num_leaves": 7
+      }
+    },
+    {
+      "model": "LightGBM",
+      "fold": 2,
+      "n_test": 3,
+      "blocks": 1,
+      "rmse": 3944.947739999252,
+      "r2": -10.417587184032042,
+      "parameters": {
+        "model__min_child_samples": 4,
+        "model__num_leaves": 7
+      }
+    },
+    {
+      "model": "LightGBM",
+      "fold": 3,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 10470.780469862777,
+      "r2": -26834.658089834677,
+      "parameters": {
+        "model__min_child_samples": 2,
+        "model__num_leaves": 7
+      }
+    },
+    {
+      "model": "LightGBM",
+      "fold": 4,
+      "n_test": 2,
+      "blocks": 1,
+      "rmse": 8359.35957386825,
+      "r2": -320.8279306431658,
+      "parameters": {
+        "model__min_child_samples": 2,
+        "model__num_leaves": 7
+      }
+    },
+    {
+      "model": "LightGBM",
+      "fold": 5,
+      "n_test": 2,
+      "blocks": 2,
+      "rmse": 5656.124531209496,
+      "r2": -4840.819371365802,
+      "parameters": {
+        "model__min_child_samples": 4,
+        "model__num_leaves": 7
+      }
+    }
+  ],
+  "parameters": {
+    "model__max_features": 0.7,
+    "model__min_samples_leaf": 2
+  },
+  "winner": "Random Forest",
+  "moran": {
+    "i": -0.14541247752578482,
+    "p": 0.142,
+    "expected": -0.08333333333333333,
+    "permutations": 999,
+    "neighbors": 8
+  },
+  "reference_parcel": {
+    "area_m2": 2340.0,
+    "emsal": 0.6,
+    "gabari_m": 10.5,
+    "imar_durumu": "Field",
+    "tapu_durumu": "Individual title"
+  },
+  "grid_median_tl_m2": 5279.470304688626,
+  "grid_cells": 3401,
+  "grid_missing_environment": 173,
+  "features": [
+    "area_m2",
+    "emsal",
+    "gabari_m",
+    "imar_durumu",
+    "tapu_durumu",
+    "ndvi",
+    "ndbi",
+    "mndwi",
+    "dist_centre_m",
+    "dist_road_m",
+    "dist_transit_m",
+    "dist_school_m",
+    "dist_hospital_m",
+    "dist_park_m",
+    "dist_coast_m"
+  ],
+  "mode": "pilot",
+  "top_shap": [
+    {
+      "feature": "numeric__dist_hospital_m",
+      "mean_abs_shap_tl_m2": 1782.0925410961504
+    },
+    {
+      "feature": "numeric__missingindicator_emsal",
+      "mean_abs_shap_tl_m2": 1208.5754326824483
+    },
+    {
+      "feature": "numeric__ndvi",
+      "mean_abs_shap_tl_m2": 463.8514134225421
+    },
+    {
+      "feature": "numeric__ndbi",
+      "mean_abs_shap_tl_m2": 303.9657255582566
+    },
+    {
+      "feature": "numeric__area_m2",
+      "mean_abs_shap_tl_m2": 269.23625951301443
+    },
+    {
+      "feature": "numeric__dist_school_m",
+      "mean_abs_shap_tl_m2": 234.34735459755177
+    },
+    {
+      "feature": "numeric__dist_park_m",
+      "mean_abs_shap_tl_m2": 214.70117399923362
+    },
+    {
+      "feature": "numeric__dist_transit_m",
+      "mean_abs_shap_tl_m2": 194.6008159199111
+    }
+  ],
+  "n": 13,
+  "period": [
+    "2026-11-23",
+    "2026-11-24"
+  ],
+  "ad_dates": [
+    "2026-10-04",
+    "2026-11-18"
+  ],
+  "missing": {
+    "area_m2": 0,
+    "emsal": 6,
+    "gabari_m": 9,
+    "imar_durumu": 0,
+    "tapu_durumu": 0,
+    "ndvi": 0,
+    "ndbi": 0,
+    "mndwi": 0,
+    "dist_centre_m": 0,
+    "dist_road_m": 0,
+    "dist_transit_m": 0,
+    "dist_school_m": 0,
+    "dist_hospital_m": 0,
+    "dist_park_m": 0,
+    "dist_coast_m": 0
+  },
+  "version": "20261124T052705Z-28c5b4",
+  "trained_utc": "2026-11-24T05:27:58.944717+00:00"
+}

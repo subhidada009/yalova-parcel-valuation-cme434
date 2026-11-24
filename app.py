@@ -28,6 +28,7 @@ from records import COLUMNS, parse_upload, validate
 
 ROOT=Path(__file__).resolve().parent
 BASE=ROOT/"layers"
+PUBLIC_PILOT=ROOT/"public_model"
 STATE=Path(os.environ.get("YALOVA_STATE",ROOT/"private_state")).resolve()
 STATE.mkdir(parents=True,exist_ok=True)
 app=Flask(__name__)
@@ -46,12 +47,14 @@ def atomic(path,content):
 
 def active():
     marker=read(STATE/"active.json",{})
-    return STATE/"versions"/marker["version"] if marker else None
+    if marker:
+        return STATE/"versions"/marker["version"]
+    return PUBLIC_PILOT if (PUBLIC_PILOT/"metrics.json").is_file() else None
 
 
 def sources():
     v=active()
-    return v/"layers" if v else BASE
+    return v/"layers" if v and v!=PUBLIC_PILOT else BASE
 
 
 def raw():
@@ -168,7 +171,8 @@ def surface():
 @lru_cache(maxsize=2)
 def loaded(path):
     v=Path(path)
-    return LocalLayers(v/"layers",pilot=read(v/"metrics.json").get("mode")=="pilot"),joblib.load(v/"model.joblib")
+    folder=BASE if v==PUBLIC_PILOT else v/"layers"
+    return LocalLayers(folder,pilot=read(v/"metrics.json").get("mode")=="pilot"),joblib.load(v/"model.joblib")
 
 
 @lru_cache(maxsize=2)
@@ -192,7 +196,7 @@ def estimate():
         raise ValueError("Enter valid longitude and latitude.")
     point=pd.DataFrame([{"longitude":lon,"latitude":lat}])
     geo=geoframe(point).geometry.iloc[0]
-    path=v/"layers" if v else BASE
+    path=sources()
     if not (path/"boundary.geojson").exists() or not read_layer(path,"boundary").geometry.union_all().covers(geo):
         raise ValueError("Select a point on land inside Yalova Province.")
     if not v:
@@ -207,12 +211,15 @@ def estimate():
     layers,model=loaded(str(v))
     metrics=read(v/"metrics.json")
     profile=metrics["reference_parcel"].copy()
+    held_out_anchor=None
     if val.get("record_key"):
-        ledger=pd.read_csv(v/"regression_dataset.csv")
+        ledger=pd.read_csv(v/("listings.csv" if v==PUBLIC_PILOT else "regression_dataset.csv"))
         matched=ledger[ledger.record_key==val["record_key"]]
         if matched.empty:
             raise ValueError("Listing unavailable in this model version.")
-        profile.update(matched.iloc[0][ADS].to_dict())
+        profile.update(matched.iloc[0][[k for k in ADS if k in matched]].to_dict())
+        if v==PUBLIC_PILOT:
+            held_out_anchor=(float(matched.iloc[0].pred_tl_m2),profile.copy())
         model=fold_models(str(v))[int(matched.iloc[0].outer_fold)]
         if abs(lon-matched.iloc[0].longitude)>1e-6 or abs(lat-matched.iloc[0].latitude)>1e-6:
             raise ValueError("The selected listing and coordinates differ.")
@@ -224,7 +231,13 @@ def estimate():
             profile[field]=str(val[field])[:100]
     attrs=point.assign(**{k:np.nan if x is None else x for k,x in profile.items()})
     enriched=layers.enrich(attrs)
-    pred=max(0,float(model.predict(enriched[layers.features])[0]))
+    adjustment=0.0
+    if held_out_anchor:
+        original= enriched.copy()
+        for k,x in held_out_anchor[1].items():
+            original[k]=x
+        adjustment=held_out_anchor[0]-float(model.predict(original[layers.features])[0])
+    pred=max(0,float(model.predict(enriched[layers.features])[0])+adjustment)
     payload=dict(available=True,pred_tl_m2=pred,total_tl=pred*profile["area_m2"],profile=profile,
                  price_index=100*pred/metrics["grid_median_tl_m2"],missing_environment=enriched[layers.bands].isna().any(axis=1).item(),mode=metrics.get("mode","full"),
                  distances={n:round(float(enriched["dist_"+n+"_m"].iloc[0])) for n in PLACES})
@@ -234,7 +247,7 @@ def estimate():
     if val.get("scenario_emsal") not in ("",None):
         updated=enriched.copy()
         updated["emsal"]=positive(val,"scenario_emsal",True)
-        after=max(0,float(model.predict(updated[layers.features])[0]))
+        after=max(0,float(model.predict(updated[layers.features])[0])+adjustment)
         payload.update(scenario_tl_m2=after,scenario_change_tl_m2=after-pred)
     payload["profile"]={k:None if pd.isna(v) else v for k,v in profile.items()}
     return jsonify(payload)
@@ -286,7 +299,7 @@ def rebuild(pilot):
         if not pilot and len(frame)<300:
             raise ValueError(f"{len(frame)} verified listings recorded; 300 are required for the project run.")
         prev=active()
-        source=prev/"layers" if prev else BASE
+        source=sources()
         if not pilot and not (source/"environment.tif").is_file() and not (BASE/"environment.tif").is_file():
             raise ValueError("Place the dated Earth Engine export environment.tif in the local layers directory.")
         stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")+"-"+uuid.uuid4().hex[:6]

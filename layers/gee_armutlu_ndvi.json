@@ -1,0 +1,26 @@
+{
+  "sensor": "Sentinel-2 SR",
+  "index": "NDVI",
+  "source_url": "https://defaniarman.users.earthengine.app/view/s2-spectral-calc",
+  "retrieval_date": "2026-11-24",
+  "start_input": "2026-10-25",
+  "end_input": "2026-11-24",
+  "scene_cloud_setting_percent": 20,
+  "crs": "EPSG:4326",
+  "bounds_wgs84": [
+    28.796304916206967,
+    40.499107280074035,
+    28.86179210041928,
+    40.535039891438814
+  ],
+  "pixel_size_degrees": [
+    8.983152841195215e-05,
+    8.983152841195215e-05
+  ],
+  "width": 729,
+  "height": 400,
+  "valid_pixels": 290372,
+  "matched_centres": 6,
+  "dated_centres": 6,
+  "sha256": "8fb6dba87eccf78150abe0891c0c166b6c8756c008cfeb0c951544992401c0bc"
+}

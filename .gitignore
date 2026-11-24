@@ -11,4 +11,6 @@ value_points.*
 regression_dataset.csv
 ledger.csv
 *.joblib
+!public_model/model.joblib
+!public_model/held_out_models.joblib
 

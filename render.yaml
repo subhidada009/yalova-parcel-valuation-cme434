@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: yalova-parcel-valuation-cme434
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: YALOVA_STATE
+        value: /tmp/yalova
+      - key: YALOVA_ADMIN_TOKEN
+        generateValue: true

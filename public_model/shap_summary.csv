@@ -1,0 +1,22 @@
+feature,mean_abs_shap_tl_m2
+numeric__dist_hospital_m,1782.0925410961504
+numeric__missingindicator_emsal,1208.5754326824483
+numeric__ndvi,463.8514134225421
+numeric__ndbi,303.9657255582566
+numeric__area_m2,269.23625951301443
+numeric__dist_school_m,234.34735459755177
+numeric__dist_park_m,214.70117399923362
+numeric__dist_transit_m,194.6008159199111
+numeric__mndwi,68.45050870948882
+classes__imar_durumu_Field,65.54005324138201
+numeric__emsal,63.07143105006199
+numeric__dist_centre_m,59.78564753957726
+numeric__missingindicator_gabari_m,50.49642683810013
+numeric__dist_coast_m,39.648808834819974
+classes__imar_durumu_Olive grove,34.910530506434995
+numeric__gabari_m,32.456489139095666
+classes__imar_durumu_Residential,23.909494993997406
+numeric__dist_road_m,8.943253810087521
+classes__imar_durumu_Mixed residential and commercial,0.0
+classes__imar_durumu_Villa development,0.0
+classes__tapu_durumu_Individual title,0.0
