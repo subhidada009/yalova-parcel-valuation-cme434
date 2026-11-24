@@ -1,0 +1,74 @@
+{
+  "bounds": [
+    [
+      40.44,
+      28.7
+    ],
+    [
+      40.77,
+      29.69
+    ]
+  ],
+  "date": "2026-11-09",
+  "credit": "Contains modified Copernicus Sentinel data (2026).",
+  "platform": "Sentinel-2C MSI Level-2A",
+  "crs": "EPSG:4326",
+  "size_pixels": [
+    1900,
+    835
+  ],
+  "rgb_footprint_percent": 100.0,
+  "rgb_bands": [
+    "B04",
+    "B03",
+    "B02"
+  ],
+  "display_curve": "RGB output = 255 * (8-bit TCI / 255)^0.80, applied equally to each channel.",
+  "source": "Original Copernicus level-2A true-colour image mosaicked from a single orbit, served as Earth Search Collection 1 COGs.",
+  "items": [
+    {
+      "earth_search": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a/items/S2C_T35TPE_20261109T085515_L2A",
+      "copernicus": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20261109T085151_N0513_R107_T35TPE_20261109T123110",
+      "tile": "PE",
+      "time_utc": "2026-11-09T08:59:10.377000Z"
+    },
+    {
+      "earth_search": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a/items/S2C_T35TPF_20261109T085515_L2A",
+      "copernicus": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20261109T085151_N0513_R107_T35TPF_20261109T123110",
+      "tile": "PF",
+      "time_utc": "2026-11-09T08:58:55.710000Z"
+    },
+    {
+      "earth_search": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a/items/S2C_T35TQE_20261109T085515_L2A",
+      "copernicus": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20261109T085151_N0513_R107_T35TQE_20261109T123110",
+      "tile": "QE",
+      "time_utc": "2026-11-09T08:59:07.218000Z"
+    },
+    {
+      "earth_search": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a/items/S2C_T35TQF_20261109T085515_L2A",
+      "copernicus": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20261109T085151_N0513_R107_T35TQF_20261109T123110",
+      "tile": "QF",
+      "time_utc": "2026-11-09T08:58:52.599000Z"
+    }
+  ],
+  "independent_check": {
+    "filename": "copernicus_indices_reference.tif",
+    "native_grid_m": {
+      "green_red_nir": 10,
+      "swir_scl": 20
+    },
+    "output_grid_m": 60,
+    "crs": "EPSG:32635",
+    "nodata": -9999.0,
+    "bands": [
+      "ndvi",
+      "ndbi",
+      "mndwi"
+    ],
+    "coverage_percent_of_padded_projected_rectangle": {
+      "ndvi": 57.52,
+      "ndbi": 58.19,
+      "mndwi": 89.98
+    }
+  }
+}

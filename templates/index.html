@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yalova | Parcel valuation</title><link rel="stylesheet" href="/static/leaflet/leaflet.css"><link rel="stylesheet" href="/static/design.css"></head>
+<body><header><div class="topline"><span class="brand"><i></i> Yalova <b> / </b> Land observatory</span><span>CME434 · Karabük University</span></div>
+<div class="title"><h1>A GIS and ML-Based Land Parcel Valuation System for Decision Support</h1>
+<div class="byline">SUBHI YASER SUBHI DDA <span>2310213583</span> &nbsp;·&nbsp; Magd Shalaby <span>2210213583</span><br>Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab</div></div></header>
+<main><section class="map-column"><div class="map-heading"><div><p class="eyebrow">STUDY AREA</p><h2>Yalova Province</h2></div><label>Map layer<select id="mapMode"><option value="context">Geographic context</option><option value="rgb">Satellite image</option><option value="pilotCentres">Verified parcel centres · price index</option><option value="pilot">November pilot · price index</option><option value="price">Land value · TL/m²</option><option value="index">Price index</option><option value="lisa">Local Moran clusters</option></select></label></div>
+<div id="map" aria-label="Interactive map of Yalova"></div><div id="legend"></div><div id="mapCaption">Choose a point on land to inspect its location.</div>
+<section id="result" aria-live="polite"><h3>Location details</h3><p>Click the map or select a listing.</p></section></section>
+<section class="panel"><div class="tabs" role="group" aria-label="Workspace"><button class="tab on" data-tab="explore">Explore</button><button class="tab" data-tab="model">Model</button><button class="tab" data-tab="manage">Data</button></div>
+<div id="explore" class="tabcontent"><h2>Find a parcel</h2><p class="sub">Filter asking prices and compare listings with the local model.</p>
+<div class="pair"><label>Maximum budget (TL)<input id="budget" type="number" min="1" placeholder="Any budget"></label><label>Minimum area (m²)<input id="minArea" type="number" min="0" placeholder="Any size"></label></div>
+<label>Maximum area (m²)<input id="maxArea" type="number" min="1" placeholder="Any size"></label>
+<div class="pair"><label>Zoning<select id="zoning"><option value="">All zoning</option></select></label><label>Value class<select id="vclass"><option value="">All classes</option><option>Lower</option><option>Middle</option><option>Upper</option></select></label></div>
+<h3 id="listingCount">Matching listings</h3><div id="listingList"></div>
+<details open><summary>Fair-price check & scenario</summary>
+<form id="estimate"><div class="pair"><label>Latitude<input name="latitude" type="number" step="any" required placeholder="40.65"></label><label>Longitude<input name="longitude" type="number" step="any" required placeholder="29.27"></label></div>
+<div class="pair"><label>Area (m²)<input name="area_m2" type="number" min="0.01" step="any" placeholder="Reference"></label><label>Zoning<input name="imar_durumu" list="zoningList" placeholder="Reference"></label></div><datalist id="zoningList"></datalist>
+<label>Asking price (TL)<input name="asking_tl" type="number" min="0.01" step="any" placeholder="Optional"></label>
+<div class="pair"><label>Current floor-area ratio<input name="emsal" type="number" min="0" step="any" placeholder="Reference"></label><label>Scenario floor-area ratio<input name="scenario_emsal" type="number" min="0" step="any" placeholder="Optional"></label></div>
+<button class="action">Inspect location</button></form></details></div>
+<div id="model" class="tabcontent" hidden><h2>Model evidence</h2><div id="modelBody"></div><h3>Result downloads</h3><div id="downloads"></div></div>
+<div id="manage" class="tabcontent" hidden><h2>Collection & updates</h2><p class="sub" id="count"></p>
+<p>Manual listing sources for Yalova: <a href="https://www.hepsiemlak.com/yalova-satilik/arsa" target="_blank" rel="noopener noreferrer">Hepsiemlak</a> and <a href="https://www.emlakjet.com/satilik-arsa/yalova" target="_blank" rel="noopener noreferrer">Emlakjet</a>.</p>
+<a href="/api/template/listings">Download private listing CSV template</a><br><a href="/api/template/features">Download point-feature CSV template</a>
+<label>Administrator key<input id="admin" type="password" autocomplete="off"></label>
+<details><summary>Record one manually checked listing</summary><form id="manual"></form></details>
+<details><summary>Upload records or a feature layer</summary><form id="upload"><label>Upload type<select id="uploadType"><option value="listings">New private listings</option><option value="features">Replacement vector feature layer</option></select></label>
+<div id="featureOpts" hidden><label>Layer<select name="name"><option>centre</option><option>road</option><option>transit</option><option>school</option><option>hospital</option><option>park</option><option>coast</option></select></label><label>Source name or URL<input name="source"></label><label>Snapshot date<input name="source_date" type="date"></label><small>Upload the complete layer. Use line GeoJSON for roads and coast. Point layers accept CSV longitude and latitude.</small></div>
+<label>CSV or GeoJSON file<input name="file" type="file" accept=".csv,.json,.geojson" required></label><button class="action">Validate & stage</button></form></details>
+<details><summary>Rebuild model and maps</summary><p>The research pilot uses the local Copernicus raster and at least five spatial blocks. The full project run uses the six-band Earth Engine export and 300 verified listings.</p><button id="pilotTrain" class="action">Retrain research pilot</button> <button id="train" class="action">Retrain full project model</button></details><p id="message" role="status"></p></div></section></main>
+<footer>Results provide guidance only. An official appraisal requires a licensed valuation expert.</footer>
+<script src="/static/leaflet/leaflet.js"></script><script src="/static/map.js"></script></body></html>

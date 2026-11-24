@@ -1,0 +1,14 @@
+private_state/
+private/
+.env
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+release_private/
+release_build/
+value_points.*
+regression_dataset.csv
+ledger.csv
+*.joblib
+

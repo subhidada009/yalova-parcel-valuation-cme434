@@ -1,0 +1,9 @@
+private_state
+private
+release_private
+release_build
+.git
+.venv
+**/__pycache__
+.env
+

@@ -1,0 +1,20 @@
+{
+  "title": "A GIS and ML-Based Land Parcel Valuation System for Decision Support",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "DDA, SUBHI YASER SUBHI"
+    },
+    {
+      "name": "Shalaby, Magd"
+    }
+  ],
+  "description": "A local Python web GIS for Yalova Province, Türkiye. CME434 Geographic Information Systems, Karabük University. Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab.",
+  "license": "mit",
+  "keywords": [
+    "land valuation",
+    "Yalova",
+    "spatial cross-validation",
+    "geographic information systems"
+  ]
+}

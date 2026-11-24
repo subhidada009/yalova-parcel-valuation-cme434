@@ -1,0 +1,143 @@
+{
+  "source": "© OpenStreetMap contributors, distributed by Geofabrik",
+  "license": "Open Database License (ODbL) 1.0",
+  "license_url": "https://www.openstreetmap.org/copyright",
+  "source_url": "https://download.geofabrik.de/europe/turkey/turkey-261122.osm.pbf",
+  "archive_checksum_md5": "76de617fc413a706df2e96a86e9498af",
+  "snapshot_utc": "2026-11-22T21:20:48Z",
+  "extracted_on": "2026-11-23",
+  "coordinate_reference_system": "EPSG:4326",
+  "spatial_resolution": "Vector geometry; mapping precision and coverage vary by feature.",
+  "accessibility_buffer_m": 18000,
+  "buffer_method": "Terrestrial province polygon buffered in EPSG:32635; all matching features clipped to the buffer.",
+  "boundary_method": "OSM administrative relation TR-77 intersected with land inferred from directed coastline ways; projected topology, city-node containment and area sanity checks.",
+  "province_relation_id": 223472,
+  "land_area_km2": 787.672,
+  "bounds_wgs84": [
+    28.7796417,
+    40.4562294,
+    29.5583037,
+    40.7430586
+  ],
+  "centre_definition": "OSM place=city or town node named Yalova. Proxy for the provincial urban centre.",
+  "centre_osm_url": "https://www.openstreetmap.org/node/25869857",
+  "centre_wgs84": [
+    29.2699916,
+    40.6582529
+  ],
+  "selection_tags": {
+    "road": [
+      [
+        "highway",
+        "motorway"
+      ],
+      [
+        "highway",
+        "motorway_link"
+      ],
+      [
+        "highway",
+        "trunk"
+      ],
+      [
+        "highway",
+        "trunk_link"
+      ],
+      [
+        "highway",
+        "primary"
+      ],
+      [
+        "highway",
+        "primary_link"
+      ],
+      [
+        "highway",
+        "secondary"
+      ],
+      [
+        "highway",
+        "secondary_link"
+      ]
+    ],
+    "transit": [
+      [
+        "highway",
+        "bus_stop"
+      ],
+      [
+        "public_transport",
+        "platform"
+      ],
+      [
+        "public_transport",
+        "stop_position"
+      ],
+      [
+        "amenity",
+        "ferry_terminal"
+      ],
+      [
+        "amenity",
+        "bus_station"
+      ],
+      [
+        "railway",
+        "station"
+      ],
+      [
+        "railway",
+        "halt"
+      ]
+    ],
+    "school": [
+      [
+        "amenity",
+        "school"
+      ]
+    ],
+    "hospital": [
+      [
+        "amenity",
+        "hospital"
+      ],
+      [
+        "healthcare",
+        "hospital"
+      ]
+    ],
+    "park": [
+      [
+        "leisure",
+        "park"
+      ]
+    ],
+    "coast": [
+      [
+        "natural",
+        "coastline"
+      ]
+    ],
+    "centre": [
+      [
+        "place",
+        "city"
+      ],
+      [
+        "place",
+        "town"
+      ]
+    ]
+  },
+  "feature_counts": {
+    "centre": 1,
+    "transit": 1352,
+    "school": 347,
+    "hospital": 39,
+    "park": 589,
+    "road": 3244,
+    "coast": 155,
+    "boundary": 1
+  },
+  "limitations": "OSM is a contributor-maintained map. Distances are straight-line distance to the mapped geometry, not travel times. Roads exclude tertiary and local streets. Transit coverage depends on mapped stops. The 18 km external buffer includes nearby facilities outside Yalova. The OSM boundary is suitable for study, not cadastral or legal use."
+}
