@@ -12,13 +12,19 @@ Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab
 
 ## Status on 24 November 2026
 
-The private ledger contains 113 land offers with asking prices and areas verified through direct listing pages in Brave on 23–24 November 2026. It includes 28 original publication dates in the review window, 10 dated source updates and 75 undated offers. The 106 in-boundary advertising pins are provisional parcel locations. The production app still awaits a complete centroid-verified cohort and the six-band Earth Engine raster. Public repository and hosting links and a Zenodo DOI are pending.
+The private ledger contains 113 land offers with asking prices and areas verified through direct listing pages in Brave on 23–24 November 2026. It includes 28 original publication dates in the review window, 10 dated source updates and 75 undated offers. The 106 in-boundary advertising pins are provisional parcel locations. The full study still needs a cohort of 300 verified parcels and the six-band provincial Earth Engine raster.
+
+[Interactive Yalova atlas](https://subhidada009.github.io/yalova-parcel-valuation-cme434/) · [Source repository](https://github.com/subhidada009/yalova-parcel-valuation-cme434) · [Tagged release](https://github.com/subhidada009/yalova-parcel-valuation-cme434/releases/tag/v1.0.0)
+
+[![DOI](https://zenodo.org/badge/1469693624.svg)](https://zenodo.org/badge/latestdoi/1469693624)
 
 The private spatial pilot joins 15 predictors to those 106 positions. Its model sample includes 22 original publication-dated offers in three districts and eleven 5 km spatial blocks. Across five held-out folds, LightGBM achieved RMSE of 6,331 TL/m² and R² of −0.150. The private archive contains the model comparison, SHAP, spatial autocorrelation results and an exploratory 500 m index grid. From this directory, run `python preparation/spatial_pilot.py PATH_TO/Yalova_Direct_Listings.csv PATH_TO/pilot` to reproduce it. The application retains its separate production training workflow.
 
 Among 57 cadastral lookups, 44 offers matched the location, block, parcel number and registered area. The public TKGM viewer supplied the parcel polygons. Forty-two of these offers also provided a map pin. The median pin-to-centroid distance was 176 m. Thirteen of the 44 offers had original posting dates inside the study window. The independent model at these verified centres ranked Random Forest first, with RMSE of 6,964 TL/m² and R² of −0.521. The private archive includes the checked polygons, reproducible verification and modelling commands, and a validated 13-row application upload. [TKGM Parcel Sorgu](https://parselsorgu.tkgm.gov.tr/)
 
 ## Open the application
+
+The hosted atlas displays the 3,401-cell exploratory price surface, held-out estimates and floor-area scenarios for 13 dated and cadastral-verified offers. The Flask application also serves a bundled trained model and accepts private data through its administrator interface. The included Render Blueprint uses the free Docker service and temporary storage for uploads. Download private results before restarting that service.
 
 Choose **Verified parcel centres · price index** for the analysis based on cadastral polygons, or **November pilot · price index** for the analysis based on advertising pins. Click a cell for the reference value, index and nearest-sample distance. The Model tab shows both sets of test scores. Each downloadable pilot grid contains 3,401 cells.
 
@@ -36,6 +42,8 @@ python serve.py --desktop
 Default local address: http://127.0.0.1:8434 . Leaflet, all display layers and all prediction inputs are local. The backend makes no external data requests. An administrator key is needed only for uploads and training. Read-only requests work without a key.
 
 ## Geographic inputs
+
+The Earth Engine NDVI export for Armutlu covers six dated cadastral centres. The Sentinel-2 SR window was 25 October to 24 November 2026 with a 20% scene cloud setting. Means over 100 m buffers ranged from 0.583 to 0.804. The downloaded GeoTIFF and its metadata are in the layers directory. The province-wide pilot predictors use the separately documented Copernicus source. [Earth Engine spectral calculator](https://defaniarman.users.earthengine.app/view/s2-spectral-calc)
 
 - Eight WGS84 GeoJSON layers and their licence, snapshot time and extraction rules are in `layers/`. Shipped OSM snapshot: 22 November 2026 at 21:20:48 UTC. The seven accessibility layers cover the terrestrial region and an 18 km margin. To rebuild them, download the pinned national PBF in `layers/vector_sources.json`, install `osmium` and run `python preparation/extract_vectors.py path/to/turkey-261122.osm.pbf layers`. [Geofabrik](https://download.geofabrik.de/europe/turkey.html)
 - The Sentinel-2C RGB mosaic and independent 60 m three-band reference come from 9 November 2026. Their STAC product identifiers are in `layers/rgb_bounds.json`. The reference preview can be rebuilt with `python preparation/copernicus_reference.py`. The Earth Engine and Copernicus outputs have different provenance.
@@ -70,7 +78,7 @@ python preparation/release_outputs.py private_state release_build
 
 Only `release_build/release_public/model_inputs.csv` is intended for a public source repository or archive. It includes coordinates, price, area, zoning and posting date. Keep `release_private`, complete GIS tables, uploaded labels, ad IDs, source URLs, administrator keys and private version directories outside public Git and Zenodo. Contributors can reproduce the full pipeline with their own manually collected private fields; the disclosure-minimised public CSV alone cannot recreate all private attributes.
 
-## Final release and hosting
+## Reproducing a public release
 
 1. Create a public GitHub repository under the group's account. Each student commits the work they actually contributed under their own identity. Include the source, notebook, requirements, permitted layers and appropriate download instructions.
 2. Deploy the included Dockerfile on a Python-capable host with sufficient RAM and persistent disk. Mount a persistent directory at `/data/yalova`, set `YALOVA_STATE` to that directory, and set `YALOVA_ADMIN_TOKEN` using the host's secret store. After an initial clone add the genuine GEE export in `layers/` before building the host image. Transfer the completed private state securely to the mounted directory, or upload and train there. Confirm the public URL survives a restart and performs predictions from stored layers.
