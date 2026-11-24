@@ -136,6 +136,18 @@ async function change(button,fn){
  finally{button.disabled=false;}
 }
 const adminHeaders=()=>({'X-Admin-Token':$('admin').value});
+$('referenceDownload').onclick=async e=>{
+ const button=e.currentTarget;button.disabled=true;
+ try{
+  const response=await fetch('/api/private/references',{headers:adminHeaders()});
+  if(!response.ok)throw new Error((await response.json()).error);
+  const url=URL.createObjectURL(await response.blob());
+  const link=document.createElement('a');link.href=url;link.download='listing_reference_register.csv';link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $('message').textContent='Downloaded the private reference register.';
+ }catch(error){$('message').textContent=error.message;}
+ finally{button.disabled=false;}
+};
 $('manual').onsubmit=e=>{e.preventDefault();const form=e.currentTarget;
  change(e.submitter,async()=>{const row=Object.fromEntries(new FormData(form));const col=Object.keys(row);const csv=col.join(',')+'\n'+col.map(k=>'"'+row[k].replaceAll('"','""')+'"').join(',')+'\n';const fd=new FormData();fd.set('file',new Blob([csv]),'entry.csv');const r=await portal('/api/upload/listings',{method:'POST',headers:adminHeaders(),body:fd});form.reset();return r;});};
 $('upload').onsubmit=e=>{e.preventDefault();change(e.submitter,()=>portal('/api/upload/'+$('uploadType').value,{method:'POST',headers:adminHeaders(),body:new FormData($('upload'))}));};

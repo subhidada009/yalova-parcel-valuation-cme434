@@ -24,12 +24,13 @@ from shapely.ops import unary_union
 from werkzeug.exceptions import HTTPException
 
 from engine import ADS, BANDS, CATS, DIST, FEATURES, PLACES, LocalLayers, dump, geoframe, read_layer, train, mean_bands, RADIUS_M
-from records import COLUMNS, parse_upload, validate
+from records import COLUMNS, REFERENCE_COLUMNS, parse_upload, validate, validate_references
 
 ROOT=Path(__file__).resolve().parent
 BASE=ROOT/"layers"
 PUBLIC_PILOT=ROOT/"public_model"
 STATE=Path(os.environ.get("YALOVA_STATE",ROOT/"private_state")).resolve()
+REFERENCE_REGISTER=STATE/"listing_reference_register.csv"
 STATE.mkdir(parents=True,exist_ok=True)
 app=Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"]=30*1024*1024
@@ -107,11 +108,22 @@ def status():
 
 @app.get("/api/template/<kind>")
 def template(kind):
-    if kind not in ["features","listings"]:
+    columns={"features":["longitude","latitude"],"listings":COLUMNS,"references":REFERENCE_COLUMNS}
+    if kind not in columns:
         abort(404)
-    cols=["longitude","latitude"] if kind=="features" else COLUMNS
-    return send_file(io.BytesIO((",".join(cols)+"\n").encode()),mimetype="text/csv",
+    return send_file(io.BytesIO((",".join(columns[kind])+"\n").encode()),mimetype="text/csv",
                      as_attachment=True,download_name=kind+"_template.csv")
+
+
+@app.get("/api/private/references")
+@admin
+def reference_register():
+    if not REFERENCE_REGISTER.is_file():
+        abort(404,description="No private reference register has been uploaded.")
+    response=send_file(REFERENCE_REGISTER,as_attachment=True)
+    response.cache_control.private=True
+    response.cache_control.no_store=True
+    return response
 
 
 @app.get("/api/map/<name>")
@@ -256,11 +268,17 @@ def estimate():
 @app.post("/api/upload/<kind>")
 @admin
 def upload(kind):
-    if kind not in ("listings","features"):
+    if kind not in ("listings","features","references"):
         abort(404)
     item=request.files["file"]
+    if kind=="references" and not (item.filename or "").lower().endswith(".csv"):
+        raise ValueError("The private reference register must be a CSV file.")
     frame=parse_upload(item.read(),item.filename or "",kind=="features")
     with FileLock(str(STATE/"write.lock"),timeout=0):
+        if kind=="references":
+            checked=validate_references(frame)
+            atomic(REFERENCE_REGISTER,checked.to_csv(index=False))
+            return jsonify(message=f"Saved {len(checked)} references privately. The model inputs are unchanged.")
         if kind=="listings":
             checked=validate(pd.concat([raw()[COLUMNS],frame],ignore_index=True),BASE)
             atomic(STATE/"ledger.csv",checked.to_csv(index=False))

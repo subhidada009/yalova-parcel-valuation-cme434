@@ -11,11 +11,46 @@ import pandas as pd
 from shapely.geometry import Point, shape
 from engine import read_layer, geoframe
 
+REFERENCE_COLUMNS = (
+    "reference_number", "source", "listing_no", "url", "page_checked_on", "publication_date",
+    "publication_evidence_url", "source_update_date", "district", "locality", "asking_price_tl",
+    "area_m2", "unit_tl_m2", "zoning", "far", "height_m", "deed_type", "seller_category",
+    "cadastral_block", "cadastral_parcel", "longitude", "latitude", "coordinate_basis",
+    "cadastral_reference", "within_study_window", "offer_scope_note", "dated_centroid_candidate",
+)
 COLUMNS = ["ilan_no","ad_date","url","collected_on","latitude","longitude","imar_durumu",
            "area_m2","price_tl","emsal","gabari_m","tapu_durumu","kimden","coordinate_basis"]
 BASIS = ["Parcel centroid on listing map","Verified cadastral parcel centroid"]
 SELLERS = ["Owner","Agency","Developer","Bank","Public institution","Other","Unknown"]
 NUMERIC = ["latitude","longitude","area_m2","price_tl","emsal","gabari_m"]
+
+
+def validate_references(data):
+    """Validate the private screening register without promoting its rows to model inputs."""
+    if data.empty or set(data.columns) != set(REFERENCE_COLUMNS):
+        raise ValueError("Use the private reference register CSV template with at least one row.")
+    result = data.loc[:, list(REFERENCE_COLUMNS)].copy()
+    result["url"] = result.url.str.strip()
+    for field in ("reference_number", "asking_price_tl", "area_m2"):
+        values = pd.to_numeric(result[field], errors="coerce")
+        if not (np.isfinite(values) & (values > 0)).all():
+            raise ValueError(f"{field} must contain positive numeric values.")
+    numbers = pd.to_numeric(result.reference_number)
+    if numbers.duplicated().any() or not (numbers % 1 == 0).all():
+        raise ValueError("Reference numbers must be distinct whole numbers.")
+    def listing_key(url):
+        parts = urlsplit(url)
+        if parts.scheme not in {"http", "https"} or not parts.hostname or parts.username or not parts.path.strip("/"):
+            raise ValueError("Each reference needs a public listing-detail URL.")
+        return (parts.hostname.removeprefix("www."), parts.path.rstrip("/"), parts.query)
+
+    if result.url.map(listing_key).duplicated().any():
+        raise ValueError("Duplicate listing URLs in the reference register.")
+    checked = pd.to_datetime(result.page_checked_on, format="%Y-%m-%d", errors="coerce")
+    if checked.isna().any() or (checked > pd.Timestamp(date.today())).any():
+        raise ValueError("Every reference requires a valid page check date (YYYY-MM-DD).")
+    result["unit_tl_m2"] = (pd.to_numeric(result.asking_price_tl) / pd.to_numeric(result.area_m2)).round(2)
+    return result
 
 
 def parse_upload(contents, name, spatial_features=False):

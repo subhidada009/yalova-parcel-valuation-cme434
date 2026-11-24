@@ -12,21 +12,19 @@ Supervisor: Dr. Öğr. Üyesi Sohaib K. M. Abujayyab
 
 ## Status on 24 November 2026
 
-The private ledger contains 113 land offers with asking prices and areas verified through direct listing pages in Brave on 23–24 November 2026. It includes 28 original publication dates in the review window, 10 dated source updates and 75 undated offers. The 106 in-boundary advertising pins are provisional parcel locations. The full study still needs a cohort of 300 verified parcels and the six-band provincial Earth Engine raster.
+The private register contains 300 distinct land-sale references checked in Brave on 24 November 2026. Fifty-seven have an evidenced original publication date, 30 were published from 24 September to 24 November 2026, and 33 match cadastral centroids. Three references meet the original-date and single-centroid checks together. The full study still needs a cohort of 300 verified parcels and the six-band provincial Earth Engine raster.
 
-[Live Python valuation application](https://yalova-parcel-valuation-cme434.onrender.com) · [Interactive Yalova atlas](https://subhidada009.github.io/yalova-parcel-valuation-cme434/) · [Source repository](https://github.com/subhidada009/yalova-parcel-valuation-cme434) · [Tagged research release](https://github.com/subhidada009/yalova-parcel-valuation-cme434/releases/tag/v1.0.0)
+[Live Python valuation application](https://yalova-parcel-valuation-cme434.onrender.com) · [Earlier Yalova atlas](https://subhidada009.github.io/yalova-parcel-valuation-cme434/) · [Source repository](https://github.com/subhidada009/yalova-parcel-valuation-cme434) · [Latest research release](https://github.com/subhidada009/yalova-parcel-valuation-cme434/releases/latest)
 
-[![DOI](https://zenodo.org/badge/1469693624.svg)](https://zenodo.org/badge/latestdoi/1469693624)
+[![DOI](https://zenodo.org/badge/DOI/10.5281%2Fzenodo.24491177.svg)](https://doi.org/10.5281/zenodo.24491177)
 
-The private spatial pilot joins 15 predictors to those 106 positions. Its model sample includes 22 original publication-dated offers in three districts and eleven 5 km spatial blocks. Across five held-out folds, LightGBM achieved RMSE of 6,331 TL/m² and R² of −0.150. The private archive contains the model comparison, SHAP, spatial autocorrelation results and an exploratory 500 m index grid. From this directory, run `python preparation/spatial_pilot.py PATH_TO/Yalova_Direct_Listings.csv PATH_TO/pilot` to reproduce it. The application retains its separate production training workflow.
-
-Among 57 cadastral lookups, 44 offers matched the location, block, parcel number and registered area. The public TKGM viewer supplied the parcel polygons. Forty-two of these offers also provided a map pin. The median pin-to-centroid distance was 176 m. Thirteen of the 44 offers had original posting dates inside the study window. The independent model at these verified centres ranked Random Forest first, with RMSE of 6,964 TL/m² and R² of −0.521. The private archive includes the checked polygons, reproducible verification and modelling commands, and a validated 13-row application upload. [TKGM Parcel Sorgu](https://parselsorgu.tkgm.gov.tr/)
+The current pilot adds 14 previously verified observations to the three qualifying references. It uses 17 dated parcel centres and 15 predictors. With five held-out spatial folds, LightGBM had the lowest RMSE at 6,038 TL/m² and an R² of −0.339. The reviewer package contains the 17-row verified upload, joined GIS points, complete diagnostics and the separate 300-reference register. [TKGM Parcel Sorgu](https://parselsorgu.tkgm.gov.tr/)
 
 ## Open the application
 
-The hosted atlas displays the 3,401-cell exploratory price surface, held-out estimates and floor-area scenarios for 13 dated and cadastral-verified offers. The Flask application also serves a bundled trained model and accepts private data through its administrator interface. The included Render Blueprint uses the free Docker service and temporary storage for uploads. Download private results before restarting that service.
+The Flask application serves the revised 17-parcel pilot and accepts private data through its administrator interface. The included Render Blueprint uses the free Docker service and temporary storage for uploads. Download private results before restarting that service. The static atlas preserves the earlier 13-parcel experiment.
 
-Choose **Verified parcel centres · price index** for the analysis based on cadastral polygons, or **November pilot · price index** for the analysis based on advertising pins. Click a cell for the reference value, index and nearest-sample distance. The Model tab shows both sets of test scores. Each downloadable pilot grid contains 3,401 cells.
+Choose **Price index** in the Flask app for the revised valuation surface. Click a cell or select a listing to inspect the estimate. Use the Model tab for scores, SHAP, LISA and the 3,401-cell grid downloads.
 
 On Windows, extract the complete folder and double-click **Start_Yalova.cmd**. It creates a Python 3.12 environment, installs dependencies and opens the browser. The terminal prints the local administrator key for the Data tab. First-time dependency installation requires internet access. Leave the terminal open while using the application.
 
@@ -51,6 +49,8 @@ The Earth Engine NDVI export for Armutlu covers six dated cadastral centres. The
 - To reproduce the 500 m geographic context measurements, run `python preparation/describe_location.py`. Results are in `analysis/`. They describe distance across land, independent of listing availability.
 
 ## Record eligible listings
+
+The private reference register can be replaced from **Data → Upload records or a feature layer → Replacement private reference register (CSV)**. The supplied 300-reference CSV includes coordinate quality and date evidence. Its download requires the administrator key. For training, upload `verified_pilot_upload.csv` as **New verified listings for training** and choose **Retrain research pilot** in a fresh state directory.
 
 Start with the province-wide land sale pages on [Hepsiemlak](https://www.hepsiemlak.com/yalova-satilik/arsa) and [Emlakjet](https://www.emlakjet.com/satilik-arsa/yalova). These are human browsing links. Record each selected advertisement's own URL in the private ledger. Keep track of district coverage and confirm whether similarly located offers refer to the same parcel.
 
