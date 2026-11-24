@@ -1,13 +1,13 @@
 # Data dictionary
 
-CME434 · Yalova Province · 23 November 2026. Each private regression record represents one manually verified listing. WGS84 uses longitude first in GeoJSON. All metric operations use EPSG:32635. Date columns use YYYY-MM-DD. Currency is nominal Turkish lira.
+CME434 · Yalova Province · 24 November 2026. Each private regression record represents one listing with a verified parcel centroid. WGS84 uses longitude first in GeoJSON. All metric operations use EPSG:32635. Date columns use YYYY-MM-DD. Currency is nominal Turkish lira.
 
 ## Private collection, keys and target
 
 | Column | Unit / representation | Source and meaning |
 |---|---|---|
 | ilan_no | text | Original advertisement number, preserved as text. Private appendix and analytical tables only. |
-| url | absolute URL | Publicly visible listing reference recorded manually. Private. |
+| url | absolute URL | Publicly visible listing reference. Private. |
 | record_key | text | Deterministic pseudonym from site hostname and ad number for joins in the application. |
 | ad_date | date | Posting date displayed in the ad. |
 | collected_on | date | Day the group reviewed and recorded the ad. |
@@ -19,7 +19,7 @@ CME434 · Yalova Province · 23 November 2026. Each private regression record re
 | unit_tl_m2 | TL/m² | Label = price_tl / area_m2. Prices, dates, URLs and IDs are excluded from the predictors. |
 | geometry | point | Parcel centroid; WGS84 in GeoJSON and projected UTM in GPKG/SHP. |
 
-## Eighteen model predictors
+## Model predictors
 
 | Column | Unit | Source, date and spatial support |
 |---|---|---|
@@ -42,7 +42,9 @@ CME434 · Yalova Province · 23 November 2026. Each private regression record re
 | dist_park_m | m | Nearest OSM leisure=park. |
 | dist_coast_m | m | Nearest OSM natural=coastline. |
 
-The GEE script uses 25 October through 23 November 2026 inclusive, computes per-pixel temporal medians and exports 30 m pixels in EPSG:32635. The backend averages valid cell centres inside a 100 m radius. Missing values remain missing in the analytical file and are imputed using only each model-training fold. Dynamic World probabilities are continuous scores. The separate 9 November Copernicus reference layer uses 60 m cells and three indices; its file does not enter model training.
+The full-study schema has eighteen predictors. The GEE script uses 25 October through 23 November 2026 inclusive, computes per-pixel temporal medians and exports 30 m pixels in EPSG:32635. The backend averages valid cell centres inside a 100 m radius. Missing values remain missing in the analytical file and are imputed using only each model-training fold. Dynamic World probabilities are continuous scores.
+
+The 17-parcel pilot uses fifteen predictors. Its NDVI, NDBI and MNDWI values come from the separate Sentinel-2 Copernicus reference of 9 November 2026, sampled from the 60 m raster in the same 100 m buffers. The full-study Dynamic World predictors are absent from the pilot. The Armutlu Earth Engine NDVI export is supplementary evidence for six centres.
 
 OSM source epoch is 22 November 2026 at 21:20:48 UTC. Vector geometry has variable positional accuracy and lacks a fixed pixel resolution. All distances use nearest geometry in the terrestrial province plus its 18 km external buffer. Feature uploads have their own source and date manifests. Full original tag specifications and source links are in `layers/vector_sources.json`.
 
